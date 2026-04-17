@@ -1,0 +1,20 @@
+@startuml
+start
+:Company registers;
+:Officer approves company;
+:Company posts placement drive;
+:Student logs in and applies;
+if (Eligible?) then (yes)
+  :Application marked eligible;
+  :Company shortlists candidate;
+  :Company schedules interview;
+  if (Selected?) then (yes)
+    :Student marked as placed;
+  else (no)
+    :Application rejected;
+  endif
+else (no)
+  :Application rejected;
+endif
+stop
+@enduml

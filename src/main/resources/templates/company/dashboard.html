@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<main class="landing-main">
+<section class="page-header">
+    <h1 th:text="${company.companyName + ' Dashboard'}">Company Dashboard</h1>
+    <p th:text="${company.approved ? 'Approved Company' : 'Pending Approval'}">Status</p>
+</section>
+
+<section class="grid">
+    <div class="panel">
+        <h3>Create Placement Drive</h3>
+        <form class="form" th:action="@{/company/drives}" method="post" th:object="${driveForm}">
+            <input th:field="*{title}" type="text" placeholder="Job title">
+            <textarea th:field="*{description}" placeholder="Job description"></textarea>
+            <input th:field="*{eligibleBranch}" type="text" placeholder="Eligible branch or ALL">
+            <input th:field="*{minimumCgpa}" type="number" step="0.1" placeholder="Minimum CGPA">
+            <input th:field="*{location}" type="text" placeholder="Location">
+            <input th:field="*{driveDate}" type="date">
+            <button class="btn btn--primary" type="submit">Post Drive</button>
+        </form>
+    </div>
+
+    <div class="panel">
+        <h3>Posted Drives</h3>
+        <div th:if="${#lists.isEmpty(drives)}" class="empty">No drives posted yet.</div>
+        <div th:each="drive : ${drives}" class="card">
+            <strong th:text="${drive.title}">Drive</strong>
+            <p th:text="${drive.status + ' | ' + drive.driveDate}">Drive status</p>
+            <div class="action-row">
+                <a class="btn btn--secondary" th:href="@{/company/drives/{driveId}/edit(driveId=${drive.id})}">Edit</a>
+                <a class="btn btn--secondary" th:href="@{/company/drives/{driveId}/applications(driveId=${drive.id})}">View Applications</a>
+                <form th:action="@{/company/drives/{driveId}/delete(driveId=${drive.id})}" method="post">
+                    <button class="btn btn--secondary" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Drives | PMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<main class="landing-main">
+<section class="page-header">
+    <h1>Admin Drive Management</h1>
+    <p>Monitor and remove placement drives across the system.</p>
+    <a class="btn btn--secondary" th:href="@{/admin/dashboard}">Back to Dashboard</a>
+</section>
+
+<section class="grid single-column">
+    <div class="panel">
+        <h3>All Drives</h3>
+        <div th:if="${#lists.isEmpty(drives)}" class="empty">No drives available.</div>
+        <div th:each="drive : ${drives}" class="card">
+            <strong th:text="${drive.title}">Drive</strong>
+            <p th:text="${drive.company.companyName + ' | ' + drive.status + ' | ' + drive.driveDate}">Meta</p>
+            <form th:action="@{/admin/drives/{driveId}/delete(driveId=${drive.id})}" method="post">
+                <button class="btn btn--secondary" type="submit">Delete Drive</button>
+            </form>
+        </div>
+    </div>
+</section>
+</main>
+</body>
+</html>

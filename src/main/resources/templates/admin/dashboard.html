@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<main class="landing-main">
+<section class="page-header">
+    <h1>Admin Dashboard</h1>
+    <p>Manage users, companies, and monitor platform-wide metrics.</p>
+    <div class="action-row">
+        <a class="btn btn--secondary" th:href="@{/admin/reports}">View Reports</a>
+        <a class="btn btn--secondary" th:href="@{/admin/drives}">Manage Drives</a>
+        <a class="btn btn--secondary" th:href="@{/admin/reports/export}">Export CSV</a>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat-card" th:each="entry : ${counts}">
+        <h2 th:text="${entry.value}">0</h2>
+        <p th:text="${entry.key}">Label</p>
+    </div>
+</section>
+
+<section class="grid">
+    <div class="panel">
+        <h3>Students</h3>
+        <div th:each="student : ${students}" class="card">
+            <strong th:text="${student.fullName}">Student</strong>
+            <p th:text="${student.branch + ' | ' + student.placementStatus}">Status</p>
+            <form th:action="@{/admin/students/{studentId}/delete(studentId=${student.id})}" method="post">
+                <button class="btn btn--secondary" type="submit">Delete Student</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Companies</h3>
+        <div th:each="company : ${companies}" class="card">
+            <strong th:text="${company.companyName}">Company</strong>
+            <p th:text="${company.approved ? 'Approved' : 'Pending'}">Status</p>
+            <form th:action="@{/admin/companies/{companyId}/delete(companyId=${company.id})}" method="post">
+                <button class="btn btn--secondary" type="submit">Delete Company</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Pending Company Requests</h3>
+        <div th:if="${#lists.isEmpty(pendingCompanies)}" class="empty">No pending approvals.</div>
+        <div th:each="company : ${pendingCompanies}" class="card">
+            <strong th:text="${company.companyName}">Company</strong>
+            <p th:text="${company.email}">Email</p>
+            <div class="action-row">
+                <form th:action="@{/admin/companies/{companyId}/approve(companyId=${company.id})}" method="post">
+                    <button class="btn btn--primary" type="submit">Approve</button>
+                </form>
+                <form th:action="@{/admin/companies/{companyId}/reject(companyId=${company.id})}" method="post">
+                    <button class="btn btn--secondary" type="submit">Reject</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+</body>
+</html>

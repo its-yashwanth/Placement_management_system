@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | PMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<section class="auth-shell">
+    <div class="panel auth-panel">
+        <p class="eyebrow">Placement Management System</p>
+        <h1>Login</h1>
+        <p class="muted">Use your registered email and password to continue.</p>
+        <div th:if="${param.error}" class="alert alert--error">Invalid email or password.</div>
+        <div th:if="${param.logout}" class="alert alert--success">You have been logged out.</div>
+        <div th:if="${param.registered}" class="alert alert--success">Registration successful. Please log in.</div>
+        <form class="form" th:action="@{/login}" method="post">
+            <input type="email" name="username" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <button class="btn btn--primary" type="submit">Login</button>
+        </form>
+        <div class="link-row">
+            <a th:href="@{/register/student}">Register as Student</a>
+            <a th:href="@{/register/company}">Register as Company</a>
+        </div>
+        <p class="hint">Demo accounts: `admin@pms.edu / admin123`, `officer@pms.edu / officer123`</p>
+    </div>
+</section>
+</body>
+</html>

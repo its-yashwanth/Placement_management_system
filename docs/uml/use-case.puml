@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+actor Student
+actor Company
+actor "Placement Officer" as Officer
+actor Admin
+
+rectangle PMS {
+  Student --> (Register/Login)
+  Student --> (Update Profile)
+  Student --> (View Drives)
+  Student --> (Apply for Job)
+  Student --> (Track Application Status)
+
+  Company --> (Register/Login)
+  Company --> (Post Placement Drive)
+  Company --> (View Applications)
+  Company --> (Shortlist Candidates)
+  Company --> (Schedule Interviews)
+  Company --> (Mark Selection)
+
+  Officer --> (Approve Companies)
+  Officer --> (Monitor Drives)
+
+  Admin --> (View Dashboard)
+  Admin --> (Generate Reports)
+}
+@enduml

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Registration | PMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<section class="auth-shell">
+    <div class="panel auth-panel">
+        <p class="eyebrow">Company Onboarding</p>
+        <h1>Create Company Account</h1>
+        <div th:if="${errorMessage}" class="alert alert--error" th:text="${errorMessage}"></div>
+        <form class="form" th:action="@{/register/company}" th:object="${companyForm}" method="post">
+            <input th:field="*{companyName}" type="text" placeholder="Company name">
+            <input th:field="*{email}" type="email" placeholder="Official email">
+            <input th:field="*{password}" type="password" placeholder="Password">
+            <input th:field="*{website}" type="text" placeholder="Website">
+            <button class="btn btn--primary" type="submit">Register Company</button>
+        </form>
+        <a th:href="@{/login}">Back to login</a>
+    </div>
+</section>
+</body>
+</html>

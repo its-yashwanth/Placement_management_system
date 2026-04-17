@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | PMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<section class="auth-shell">
+    <div class="panel auth-panel">
+        <p class="eyebrow">Student Onboarding</p>
+        <h1>Create Student Account</h1>
+        <div th:if="${errorMessage}" class="alert alert--error" th:text="${errorMessage}"></div>
+        <form class="form" th:action="@{/register/student}" th:object="${studentForm}" method="post">
+            <input th:field="*{fullName}" type="text" placeholder="Full name">
+            <input th:field="*{universityRollNo}" type="text" placeholder="University roll number">
+            <input th:field="*{email}" type="email" placeholder="Email">
+            <input th:field="*{password}" type="password" placeholder="Password">
+            <input th:field="*{branch}" type="text" placeholder="Branch">
+            <input th:field="*{cgpa}" type="number" step="0.1" placeholder="CGPA">
+            <textarea th:field="*{skills}" placeholder="Skills"></textarea>
+            <input th:field="*{resumeUrl}" type="text" placeholder="Resume file name or URL">
+            <button class="btn btn--primary" type="submit">Register Student</button>
+        </form>
+        <a th:href="@{/login}">Back to login</a>
+    </div>
+</section>
+</body>
+</html>

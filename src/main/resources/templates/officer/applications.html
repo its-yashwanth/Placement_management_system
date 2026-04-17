@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Officer Application Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<main class="landing-main">
+<section class="page-header">
+    <h1 th:text="${drive.title + ' Applications'}">Applications</h1>
+    <p>Read-only view of students and the company drive they applied for.</p>
+    <a class="btn btn--secondary" th:href="@{/officer/dashboard}">Back to Officer Dashboard</a>
+</section>
+
+<section class="grid single-column">
+    <div class="panel">
+        <h3>Applications</h3>
+        <div th:if="${#lists.isEmpty(applications)}" class="empty">No applications for this drive.</div>
+        <div th:each="jobApplication : ${applications}" class="card">
+            <strong th:text="${jobApplication.student.fullName}">Student</strong>
+            <p th:text="${jobApplication.student.branch + ' | CGPA: ' + jobApplication.student.cgpa}">Info</p>
+            <p th:text="${'Skills: ' + jobApplication.student.skills}">Skills</p>
+            <p th:text="${'Resume: ' + jobApplication.student.resumeUrl}">Resume</p>
+            <p th:text="${'Company: ' + jobApplication.placementDrive.company.companyName}">Company</p>
+            <p th:text="${'Drive: ' + jobApplication.placementDrive.title}">Drive</p>
+            <p th:text="${'Status: ' + jobApplication.status}">Status</p>
+            <p th:if="${jobApplication.interviewAt != null}" th:text="${'Interview: ' + jobApplication.interviewAt}">Interview</p>
+        </div>
+    </div>
+</section>
+</main>
+</body>
+</html>

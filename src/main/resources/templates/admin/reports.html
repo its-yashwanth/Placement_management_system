@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | PMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<main class="landing-main">
+<section class="page-header">
+    <h1>Placement Reports</h1>
+    <p>Submission-friendly summary of recruitment activity and outcomes.</p>
+    <div class="action-row">
+        <a class="btn btn--secondary" th:href="@{/admin/dashboard}">Back to Admin Dashboard</a>
+        <a class="btn btn--secondary" th:href="@{/admin/reports/export}">Download CSV</a>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat-card" th:each="entry : ${counts}">
+        <h2 th:text="${entry.value}">0</h2>
+        <p th:text="${entry.key}">Metric</p>
+    </div>
+</section>
+
+<section class="grid">
+    <div class="panel">
+        <h3>Application Status Summary</h3>
+        <div th:each="entry : ${statusCounts}" class="list-row">
+            <strong th:text="${entry.key}">Label</strong>
+            <span th:text="${entry.value}">0</span>
+        </div>
+    </div>
+    <div class="panel">
+        <h3>Placed Students</h3>
+        <div th:if="${#lists.isEmpty(placedStudents)}" class="empty">No students placed yet.</div>
+        <div th:each="app : ${placedStudents}" class="list-row">
+            <strong th:text="${app.student.fullName}">Student</strong>
+            <span th:text="${app.student.branch + ' | CGPA: ' + app.student.cgpa + ' | Company: ' + app.placementDrive.company.companyName}">Details</span>
+        </div>
+    </div>
+</section>
+</main>
+</body>
+</html>

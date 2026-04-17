@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- Navbar Fragment -->
+<nav class="navbar" th:fragment="nav">
+    <div class="nav-content">
+        <a th:href="@{/}" style="text-decoration: none;">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>PMS.io</span>
+            </div>
+        </a>
+        <div class="nav-links">
+            <!-- Unauthenticated Links -->
+            <div sec:authorize="!isAuthenticated()" style="display: flex; gap: 24px; align-items: center;">
+                <a th:href="@{/login}">Sign In</a>
+                <a class="btn btn--primary btn--sm" th:href="@{/register/student}">Get Started</a>
+            </div>
+            
+            <!-- Authenticated Links -->
+            <div sec:authorize="isAuthenticated()" style="display: flex; gap: 24px; align-items: center;">
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin/dashboard}">Dashboard</a>
+                <a th:if="${#authorization.expression('hasRole(''COMPANY'')')}" th:href="@{/company/dashboard}">Dashboard</a>
+                <a th:if="${#authorization.expression('hasRole(''PLACEMENT_OFFICER'')')}" th:href="@{/officer/dashboard}">Dashboard</a>
+                <a th:if="${#authorization.expression('hasRole(''STUDENT'')')}" th:href="@{/student/dashboard}">Dashboard</a>
+                <form th:action="@{/logout}" method="post" style="margin: 0;">
+                    <button type="submit" class="btn btn--secondary btn--sm">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: nav}"></div>
+
+<main class="landing-main">
+    <section class="hero-section">
+        <div class="hero-badge">✨ Next-Gen Campus Placements</div>
+        <h1 class="hero-title">Empowering Careers, <br/> <span class="highlight">Seamlessly Connected.</span></h1>
+        <p class="hero-subtitle">
+            Bridge the gap between top-tier talent and industry-leading companies with our intelligent, 
+            end-to-end recruitment platform designed for speed and scale.
+        </p>
+        <div class="hero-actions">
+            <a th:href="@{/register/student}" class="btn btn--primary btn--lg">Join as Student</a>
+            <a th:href="@{/register/company}" class="btn btn--secondary btn--lg">Partner with Us</a>
+        </div>
+    </section>
+
+    <section class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3>Smart Matching</h3>
+            <p>Automated eligibility checks and intelligent profile pairing guarantee the best fit for every role.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Real-time Analytics</h3>
+            <p>Live dashboard updates keep administration and placement officers fully informed.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Centralized Control</h3>
+            <p>End-to-end communication, status tracking, and strict verification protocols all in one place.</p>
+        </div>
+    </section>
+</main>
+</body>
+</html>

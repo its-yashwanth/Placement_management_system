@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications | PMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="page">
+<div th:replace="~{fragments/navbar :: nav}"></div>
+<main class="landing-main">
+<section class="page-header">
+    <h1 th:text="${drive.title + ' Applications'}">Applications</h1>
+    <p th:text="${company.companyName + ' | ' + drive.driveDate}">Drive detail</p>
+    <a class="btn btn--secondary" th:href="@{/company/dashboard}">Back to Dashboard</a>
+</section>
+
+<section class="grid single-column">
+    <div class="panel">
+        <h3>Candidates</h3>
+        <div th:if="${#lists.isEmpty(applications)}" class="empty">No applications received yet.</div>
+        <div th:each="jobApplication : ${applications}" class="card">
+            <h4 th:text="${jobApplication.student.fullName}">Student</h4>
+            <p th:text="${jobApplication.student.branch + ' | CGPA: ' + jobApplication.student.cgpa}">Details</p>
+            <p th:text="${'Status: ' + jobApplication.status}">Status</p>
+            <div th:if="${jobApplication.status.name() != 'SELECTED' and jobApplication.status.name() != 'REJECTED'}" class="action-row">
+                <form th:if="${jobApplication.status.name() == 'ELIGIBLE'}" th:action="@{/company/applications/{applicationId}/shortlist(applicationId=${jobApplication.id})}" method="post">
+                    <button class="btn btn--secondary" type="submit">Shortlist</button>
+                </form>
+                <form th:if="${jobApplication.status.name() == 'SHORTLISTED'}" class="inline-form" th:action="@{/company/applications/{applicationId}/schedule(applicationId=${jobApplication.id})}" method="post" style="flex-wrap: wrap;">
+                    <input type="datetime-local" name="interviewAt" required>
+                    <button class="btn btn--secondary" type="submit">Schedule Interview</button>
+                </form>
+                <form th:if="${jobApplication.status.name() == 'INTERVIEW_SCHEDULED'}" th:action="@{/company/applications/{applicationId}/select(applicationId=${jobApplication.id})}" method="post">
+                    <button class="btn btn--primary" type="submit">Mark Selected</button>
+                </form>
+                <form th:action="@{/company/applications/{applicationId}/reject(applicationId=${jobApplication.id})}" method="post">
+                    <button class="btn btn--secondary" type="submit" style="border-color: var(--danger); color: var(--danger);">Reject</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+</body>
+</html>
