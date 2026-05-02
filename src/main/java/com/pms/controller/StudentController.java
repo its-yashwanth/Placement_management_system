@@ -1,3 +1,10 @@
+/**
+ * Handles all student operations:
+ * - Dashboard viewing
+ * - Applying to placement drives
+ * - Updating student profile
+ */
+
 package com.pms.controller;
 
 import com.pms.dto.StudentProfileForm;
