@@ -12,6 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
+/**
+ * OfficeController handles all operations related to placement officers.
+ * 
+ * Responsibilities:
+ * - Managing officer-related requests
+ * - Coordinating between students and companies
+ * - Handling administrative placement tasks
+ */
+
 @Controller
 public class OfficerController {
 
